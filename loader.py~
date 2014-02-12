@@ -1,0 +1,43 @@
+import pygame
+import os
+from pygame.locals import *
+
+currentmusic = ""
+
+def load_image(name, colorkey=None):
+    fullname = os.path.join('./img', name)
+    try:
+        image = pygame.image.load(fullname)
+    except pygame.error, message:
+        print 'Cannot load image:', fullname
+        raise SystemExit, message
+    image = image.convert()
+    if colorkey is not None:
+        if colorkey is -1:
+            colorkey = image.get_at((0, 0))
+        image.set_colorkey(colorkey, RLEACCEL)
+    return image, image.get_rect()
+
+def load_music(name):
+    fullname = os.path.join('snd',name);
+    currentmusic = fullname
+    try:
+        music = pygame.mixer.music.load (fullname)
+    except pygame.error, message:
+        print 'Cannot load music:', fullname
+        raise SystemExit, message
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play(-1)
+
+def load_sound(name):
+    fullname = os.path.join('snd',name);
+    try:
+        sound = pygame.mixer.Sound(fullname)
+        sound.set_volume(0.5)
+    except pygame.error, message:
+        print 'Cannot load sound:', fullname
+        raise SystemExit, message
+    return sound
+
+def stop_music():
+    pygame.mixer.music.stop()
