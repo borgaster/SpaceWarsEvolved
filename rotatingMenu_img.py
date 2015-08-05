@@ -1,7 +1,9 @@
 from math import sin, cos, pi
+
 from background import *
 from loader import *
 import pygame
+
 
 displayWidth = 640
 displayHeight = 480

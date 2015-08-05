@@ -1,6 +1,7 @@
-import pygame
 import random
+
 from loader import *
+import pygame
 from spritesheet import *
 
 

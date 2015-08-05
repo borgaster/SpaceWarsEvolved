@@ -1,16 +1,18 @@
-import pygame
 import time
-from pygame.locals import *
-from background import *
-from starField import *
-from asteroidField import *
-from player import *
-from physics import *
-from spacemenu import *
-from loader import *
-from powerup import *
+
 from animation import *
+from asteroidField import *
+from background import *
+from loader import *
+from physics import *
+from player import *
+from powerup import *
+import pygame
+from pygame.locals import *
 from rotatingMenu_img import *
+from spacemenu import *
+from starField import *
+
 
 # teclas dos jogadores default
 keyPresset1 = [K_LEFT,K_RIGHT,K_UP,K_DOWN, K_SPACE, K_m]
@@ -39,10 +41,10 @@ def game(numkills,nave1,nave2):
 
     #init musica
     rand = random.randrange(0,2)
-    if rand == 0:
-        load_music('After Burner.mp3')
-    else:
-        load_music('Spybreak.mp3')
+   # if rand == 0:
+       # load_music('After Burner.mp3')
+    #else:
+        #load_music('Spybreak.mp3')
     #load_music('Gundam.mp3')
     
     #init players
@@ -307,7 +309,7 @@ def main():
     pygame.display.set_caption("Space War Evolved")
     pygame.mouse.set_visible(0)
     #init musica
-    load_music('menu.mp3')
+    #load_music('menu.mp3')
     clock = pygame.time.Clock()
 
     SP, rect = load_image("SP.png", -1)

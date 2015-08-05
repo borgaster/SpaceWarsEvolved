@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import math
+import random
 import sys
 
 import pygame
 from pygame.locals import *
-import random
+
 
 #constantes
 SCREENSIZE = [1024, 768]
@@ -45,7 +46,7 @@ class StarField():
             vel, pos = estrela
 
             #gerar posicao inicial aleatoria
-            #screensize[0] pois é o valor maior do screensize
+            #screensize[0] pois ?? o valor maior do screensize
             #print SCREENSIZE
             steps = random.randint(0, WINCENTRE[0])
             #a minha posicao no x e no y vai ser a anterior mais qq coisa

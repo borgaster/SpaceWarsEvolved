@@ -1,9 +1,10 @@
-from pygame.locals import *
 from background import *
 from main import *
 from player import *
-from rotatingMenu_img import *
 import pygame
+from pygame.locals import *
+from rotatingMenu_img import *
+
 
 SCREENSIZE = [800, 600] #[1024,768]
 screen = pygame.display.set_mode(SCREENSIZE)
@@ -85,6 +86,18 @@ class SpaceMenu:
     def center_at(self, x, y):
         self.x = x-(self.width/2)
         self.y = y-(self.height/2)
+
+#Save score in JSON format
+def SaveScoreJSON(playerData):
+    with open(FILENAME, 'w') as outFile:
+        json.dump(playerData, outFile)
+        
+#Get scores
+#TODO: Still need to decide PlayerData format
+def GetScores():
+    with open(FILENAME) as dataFile:
+        playerData = json.load(dataFile)
+    return playerData
 
 #para o modo Versus
 def ScoreMenu(Player1,Player2):
@@ -246,7 +259,15 @@ def ScoreMenu(Player1,Player2):
            pygame.display.flip()
 
     stop_music()
-    load_music('menu.mp3')
+    #load_music('menu.mp3')
+
+def updateHighScore(scoreEntry):
+    filename='singlePlayer.scores'
+    if os.path.isFile(filename):
+        highscoreFile = open(filename, 'w')
+        highscoreFile.write(scoreEntry)
+        highscoreFile.write("\n")
+        highscoreFile.close()
 
 def ScoreMenu2(Player1):
     listagem=[]
@@ -279,25 +300,27 @@ def ScoreMenu2(Player1):
             var = line.split()
             listagem.append([int(var[0]),str(var[1])])
             checkEmpty=checkEmpty+1
-
+        print len(listagem)
         #Se ha 0 resultados entao temos highscore
-        if checkEmpty==0:
+        print 
+        if len(listagem) == 0:
             msgStatus=1
-
+        
         #Caso contrario, vamos entao verificar entre os top scores se temos lugar    
         else:
 
-                    
+            print 
             listagem.sort() # ordenacao dos top scores do ficheiro onde a ultima posicao representa o rank 1
             highScore=listagem[2]
 
             #Escrita do top 3 inicial, colocar aqui devido ao append mais abaixo
-            top3Escrita=SpaceMenu(
-                [""],
-                ["***** TOP PLAYERS *****"],
-                ["First place, "+str(listagem[2])],
-                ["Second place, "+str(listagem[1])],
-                ["Third place, "+str(listagem[0])])
+#             top3Escrita=SpaceMenu(
+#                 [""],
+#                 ["***** TOP PLAYERS *****"],
+#                 ["First place, "+str(listagem[2])],
+#                 ["Second place, "+str(listagem[1])],
+#                 ["Third place, "+str(listagem[0])])
+            top3Escrita=SpaceMenu(createHighScoreMenu(listagem))
 
             #top3Escrita Settings
             top3Escrita.center_at(560,260)
@@ -310,8 +333,8 @@ def ScoreMenu2(Player1):
             if jogadorDados[0] >= listagem[2]:
                 stop_music()
                 lugar=2
-                bestSong = load_music('youarethebest.mp3')
-                pygame.mixer.music.play(1)
+                #bestSong = load_music('youarethebest.mp3')
+                #pygame.mixer.music.play(1)
                 listagem.append(jogadorDados[0])
                 listagem.sort()
                 valorAremover=listagem[0]
@@ -321,8 +344,8 @@ def ScoreMenu2(Player1):
             elif jogadorDados[0] >= listagem[1]:
                 stop_music()
                 lugar=1
-                bestSong = load_music('youarethebest.mp3')
-                pygame.mixer.music.play(1)
+                #bestSong = load_music('youarethebest.mp3')
+                #pygame.mixer.music.play(1)
                 listagem.append(jogadorDados[0])
                 listagem.sort()
                 valorAremover=listagem[0]
@@ -332,8 +355,8 @@ def ScoreMenu2(Player1):
             elif jogadorDados[0] >= listagem[0]:
                 stop_music()
                 lugar=0
-                bestSong = load_music('youarethebest.mp3')
-                pygame.mixer.music.play(1)
+                ##bestSong = load_music('youarethebest.mp3')
+                #pygame.mixer.music.play(1)
                 listagem.append(jogadorDados[0])
                 listagem.sort()
                 valorAremover=listagem[0]
@@ -344,8 +367,8 @@ def ScoreMenu2(Player1):
 
     #Se nao fizemos highscore temos a seguinte msg
     if msgStatus == 0:
-        load_music("shit.mp3")
-        pygame.mixer.music.play(1)
+        #load_music("shit.mp3")
+       # pygame.mixer.music.play(1)
         congratsMessage= SpaceMenu(
             [""],
             ["Noob Player, no high score for you! Go eat Chocapic!"],
@@ -356,17 +379,18 @@ def ScoreMenu2(Player1):
     else:
 
         #temos de actualizar
-        top3Escrita=SpaceMenu(
-            [""],
-            ["***** TOP PLAYERS *****"],
-            ["First place, "+str(listagem[2])],
-            ["Second place, "+str(listagem[1])],
-            ["Third place, "+str(listagem[0])])
-        
+#         top3Escrita=SpaceMenu(
+#             [""],
+#             ["***** TOP PLAYERS *****"],
+#             ["First place, "+str(listagem[2])],
+#             ["Second place, "+str(listagem[1])],
+#             ["Third place, "+str(listagem[0])])
+        top3Escrita=SpaceMenu(createHighScoreMenu(listagem))
+        lugar=2
         congratsMessage=SpaceMenu(
             [""],
             ["CONGRATS, You got a new high score, RANK "+str(rank)+" !!! "],
-            ["Last Rank 1 was <> "+str(listagem[2])+""],
+#            ["Last Rank 1 was <> "+str(listagem[2])+""],
             [""],
             ["The game will auto return in 3 seconds,"],
             ["-> after you inserted your name/nickaname!"])
@@ -492,10 +516,17 @@ def ScoreMenu2(Player1):
             fazSleep=1
 
     stop_music()
-    load_music('menu.mp3')
+    #load_music('menu.mp3')
 #    if fazSleep==1:
 #        time.sleep(3)
     time.sleep(3)
+
+def createHighScoreMenu(scoreList):
+    header = ["","***** TOP PLAYERS *****"]
+    places = ["First place", "Second place", "Third place"]
+    for score in scoreList:
+        header.append(places[str(index(score))], score)
+    return header
     
 def roundsMenu(NAVE1,NAVE2):
     NAVE1 = NAVE1

@@ -1,9 +1,9 @@
-import pygame
-import random
 import math
-from pygame.locals import *
-from loader import *
+import random
 
+from loader import *
+import pygame
+from pygame.locals import *
 
 
 class Asteroid(pygame.sprite.Sprite):

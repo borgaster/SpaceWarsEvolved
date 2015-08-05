@@ -1,8 +1,7 @@
-import pygame
 from animation import *
-from pygame.locals import *
 from loader import *
-
+import pygame
+from pygame.locals import *
 
 
 class Laser(pygame.sprite.Sprite):

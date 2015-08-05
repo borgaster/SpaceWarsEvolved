@@ -1,6 +1,7 @@
-import pygame
 from loader import *
- 
+import pygame
+
+
 class spritesheet(object):
     def __init__(self, filename):
         try:

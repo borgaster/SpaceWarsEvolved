@@ -1,7 +1,9 @@
 import os
+
+from loader import *
 import pygame
 from pygame.locals import *
-from loader import *
+
 
 class AnimatedSprite(pygame.sprite.Sprite):
 		def __init__(self, images,x,y):

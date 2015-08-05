@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 import math
+import random
 import sys
 
+from asteroid import *
 import pygame
 from pygame.locals import *
-import random
-from asteroid import *
+
 
 class AsteroidField():    
 

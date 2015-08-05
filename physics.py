@@ -1,14 +1,15 @@
+import random
+
+from animation import *
+from loader import *
 import player
 import pygame
-import random
-from loader import *
-from animation import *
-from pygame.sprite import *
 from pygame.locals import *
+from pygame.sprite import *
+
 
 #lista de explosoes a desenhar
 #init explosoes
-
 explosoes = []
 
 weapon_pickups = []

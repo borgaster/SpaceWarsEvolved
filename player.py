@@ -1,9 +1,10 @@
-import pygame
 import random
 import time
-from pygame.locals import *
-from loader import *
+
 from laser import *
+from loader import *
+import pygame
+from pygame.locals import *
 
 
 ### DIRECCOES:
@@ -11,7 +12,6 @@ from laser import *
 ### 1 - ESTE
 ### 2 - SUL
 ### 3- OESTE
-
 class Player(pygame.sprite.Sprite):
 
     def __init__(self,posicao, keypresset,playernum,shiptype,numkills):
