@@ -1,6 +1,7 @@
 from background import *
 from main import *
 from player import *
+from statistics import *
 import pygame
 from pygame.locals import *
 from rotatingMenu_img import *
@@ -96,8 +97,11 @@ def SaveScoreJSON(playerData):
 #TODO: Still need to decide PlayerData format
 def GetScores():
     with open(FILENAME) as dataFile:
-        playerData = json.load(dataFile)
+        playerData = sorted(json.load(dataFile), key=sortByScore)
     return playerData
+
+def sortByScore(Player):
+    return player['score']
 
 #para o modo Versus
 def ScoreMenu(Player1,Player2):
@@ -684,12 +688,6 @@ def roundsMenu2(NAVE1):
             elif e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_ESCAPE:
                     keepGoing = False
-
-
-        #Draw
-        #screen.blit(background, (0,0))
-        #arena.update()
-        #arena.draw(screen)
 
         background.update()
         screen.blit(menuuRounds, (0,0))

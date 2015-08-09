@@ -48,8 +48,7 @@ class Player(pygame.sprite.Sprite):
         # 1 - numero tiros disparados
         # 2 - numero tiros certeiros
         # 3 - numero pontos
-        self.statistics = [numkills,0,0,0]
-
+        self.statistics = [numkills,0,0,0] 
         self.isDead = False
         self.playernum = playernum
 
